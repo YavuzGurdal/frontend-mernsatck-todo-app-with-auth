@@ -1,17 +1,24 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 
 const Header = () => {
     return (
         <div className="header">
-            <div className="logo">TodoApp</div>
+            <Link to='/'>
+                <div className="logo">TodoApp</div>
+            </Link>
             <ul>
-                <li>
-                    <FaUser />SignUp
-                </li>
-                <li>
-                    <FaSignInAlt />Login
-                </li>
+                <Link to='/signup'>
+                    <li>
+                        <FaUser />SignUp
+                    </li>
+                </Link>
+                <Link to='/login'>
+                    <li>
+                        <FaSignInAlt />Login
+                    </li>
+                </Link>
                 <li>
                     <FaSignOutAlt /> Logout
                 </li>
