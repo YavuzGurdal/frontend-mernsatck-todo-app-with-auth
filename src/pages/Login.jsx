@@ -55,26 +55,26 @@ const Login = () => {
                 <section className="form">
                     <form onSubmit={onSubmit}>
                         {/* <div className="form-group">
-                            <label for='name' >Full Name</label>
+                            <label htmlFor='name' >Full Name</label>
                             <input id='name' type="text" className="form-control" placeholder='John Doe' />
                             <div className="input-icon"><MdPersonOutline size={20} /></div>
                         </div> */}
                         <div className="form-group">
-                            <label for='email'>Email</label>
+                            <label htmlFor='email'>Email</label>
                             <input id='email' name='email' type="text" className="form-control" placeholder='Enter your email'
                                 onChange={onChange}
                             />
                             <div className="input-icon"><MdOutlineMail size={20} /></div>
                         </div>
                         <div className="form-group">
-                            <label for='password' >Choose Password</label>
+                            <label htmlFor='password' >Choose Password</label>
                             <input id='password' name='password' type="text" className="form-control" placeholder='Enter password'
                                 onChange={onChange}
                             />
                             <div className="input-icon"><MdLockOutline size={20} /></div>
                         </div>
                         <div className="form-group">
-                            <button><span>Do with TodoApp</span></button>
+                            <button><span>Log In</span></button>
                         </div>
                     </form>
                 </section>

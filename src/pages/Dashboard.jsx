@@ -1,13 +1,27 @@
+import { useEffect } from 'react'
 import { MdOutlineMail, MdPersonOutline, MdLockOutline } from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import TodoItem from '../components/TodoItem'
 
 const Dashboard = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const { user } = useSelector((state) => state.auth) // store'daki state'den cekiyorum
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/login')
+        }
+    }, [user, navigate])
+
     return (
         <div className='dashboard-pages-wrapper'>
             <div className="todo-pages">
                 <section className="heading">
-                    {/* <h1>Welcome {user && user.name}</h1> */}
-                    <h1>Welcome yvz grdl</h1>
+                    <h1>Welcome <span>{user && user.name}</span></h1>
+                    {/* <h1>Welcome yvz grdl</h1> */}
                     <h1>Let's go!</h1>
                 </section>
 
