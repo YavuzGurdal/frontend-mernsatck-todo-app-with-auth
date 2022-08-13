@@ -24,8 +24,19 @@ const logout = async () => {
     return response.data
 }
 
+//Signup User (axios)
+const signup = async (userData) => {
+    const response = await axios.post(API_URL + "signup", userData)
+
+    if (response.data) {
+        localStorage.setItem('user_todo', JSON.stringify(response.data))
+    }
+
+    return response.data
+}
+
 const authService = {
-    login, logout
+    login, logout, signup
 }
 
 export default authService

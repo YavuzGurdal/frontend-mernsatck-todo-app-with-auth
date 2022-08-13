@@ -74,7 +74,7 @@ const Login = () => {
                             <div className="input-icon"><MdLockOutline size={20} /></div>
                         </div>
                         <div className="form-group">
-                            <button><span>Do with TodoApp</span></button>
+                            <button><span>Log In</span></button>
                         </div>
                     </form>
                 </section>

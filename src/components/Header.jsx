@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -8,6 +9,8 @@ const Header = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
+
+    const [toggleAuthButton, setToggleAuthButton] = useState(false)
 
     const onLogout = () => {
         dispatch(logout())
@@ -29,18 +32,33 @@ const Header = () => {
                         )
                         :
                         (
-                            <>
-                                <Link to='/signup'>
-                                    <li>
-                                        <FaUser />SignUp
-                                    </li>
-                                </Link>
-                                <Link to='/login'>
-                                    <li>
-                                        <FaSignInAlt />Login
-                                    </li>
-                                </Link>
-                            </>
+                            toggleAuthButton ?
+                                (
+                                    <>
+                                        <div className='auth-button-lefttext'> Already playing with ClickUp? </div>
+                                        <Link to='/login'
+                                            onClick={() => setToggleAuthButton(!toggleAuthButton)}
+                                        >
+                                            <li>
+                                                <FaSignInAlt />Login
+                                            </li>
+                                        </Link>
+                                    </>
+                                )
+                                :
+                                (
+                                    <>
+                                        <div className='auth-button-lefttext'> Don't have an account? </div>
+                                        <Link to='/signup'
+                                            onClick={() => setToggleAuthButton(!toggleAuthButton)}
+                                        >
+                                            <li>
+                                                <FaUser />SignUp
+                                            </li>
+                                        </Link>
+
+                                    </>
+                                )
                         )
                 }
             </ul>

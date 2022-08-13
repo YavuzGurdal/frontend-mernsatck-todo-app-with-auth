@@ -95,6 +95,15 @@ a {
 .header ul li svg {
   margin-right: 5px;
 }
+.auth-button-lefttext {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #292d34;
+  /* margin-right: 15px; */
+}
 
 .auth-pages-wrapper {
   height: calc(100vh - 121px);
@@ -118,6 +127,9 @@ a {
   color: #292d34;
   text-align: center;
   margin-bottom: 20px;
+}
+.heading span {
+  color: var(--main-color);
 }
 
 .form,
