@@ -2,7 +2,11 @@ import { useEffect } from 'react'
 import { MdOutlineMail, MdPersonOutline, MdLockOutline } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import Spinner from '../components/Spinner'
+// import Spinner from '../components/Spinner'
 import TodoItem from '../components/TodoItem'
+import { getTodos, reset } from '../redux/todos/todoSlice'
+import TodoForm from './TodoForm'
 
 const Dashboard = () => {
     const navigate = useNavigate()
@@ -10,49 +14,57 @@ const Dashboard = () => {
 
     const { user } = useSelector((state) => state.auth) // store'daki state'den cekiyorum
 
+    const { todos, isError, isLoading, message } = useSelector((state) => state.todos) // store'daki state'den cekiyorum
+
     useEffect(() => {
+        if (isError) {
+            console.log(message);
+        }
+
         if (!user) {
             navigate('/login')
         }
-    }, [user, navigate])
+
+        if (user) {
+            dispatch(getTodos())
+        }
+
+        return () => {
+            dispatch(reset())
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user, navigate, dispatch])
+
+    if (isLoading) {
+        return <Spinner />
+    }
 
     return (
         <div className='dashboard-pages-wrapper'>
             <div className="todo-pages">
                 <section className="heading">
-                    <h1>Welcome <span>{user && user.name}</span></h1>
+                    <h1 style={{ color: '#292d34' }}>Welcome <span>{user && user.name}</span></h1>
                     {/* <h1>Welcome yvz grdl</h1> */}
-                    <h1>Let's go!</h1>
+                    <h1 style={{ color: '#292d34' }}>Let's <span style={{ color: '#292d34' }}>go!</span></h1>
                 </section>
 
-                <section className="content">
-                    <div className='todos'>
-                        <TodoItem />
-                        <TodoItem />
-                        <TodoItem />
-                        <TodoItem />
-                        <TodoItem />
-                        <TodoItem />
+                <TodoForm />
 
-                        {/* <div className="form-group">
-                            <label for='name' >Full Name</label>
-                            <input id='name' type="text" className="form-control" placeholder='John Doe' />
-                            <div className="input-icon"><MdPersonOutline size={20} /></div>
-                        </div>
-                        <div className="form-group">
-                            <label for='email'>Email</label>
-                            <input id='email' type="text" className="form-control" placeholder='example@site.com' />
-                            <div className="input-icon"><MdOutlineMail size={20} /></div>
-                        </div>
-                        <div className="form-group">
-                            <label for='password' >Choose Password</label>
-                            <input id='password' type="text" className="form-control" placeholder='Minimum 6 characters' />
-                            <div className="input-icon"><MdLockOutline size={20} /></div>
-                        </div>
-                        <div className="form-group">
-                            <button><span>Do with TodoApp</span></button>
-                        </div> */}
-                    </div>
+                <section className="content">
+                    {
+                        todos?.length > 0 ?
+                            (
+                                <div className='todos'>
+                                    {
+                                        todos.map((todo) => (
+                                            <TodoItem key={todo._id} todo={todo} />
+                                        ))
+                                    }
+                                </div>
+                            )
+                            :
+                            (<h3>You have not add any Todo</h3>)
+                    }
                 </section>
             </div>
         </div>
