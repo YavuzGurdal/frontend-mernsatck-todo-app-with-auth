@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://dashboard.heroku.com/apps/mern-todoapp-withauth-be",
+  "proxy": "https://mern-todoapp-be.herokuapp.com",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.4",
     "@testing-library/jest-dom": "^5.16.5",
