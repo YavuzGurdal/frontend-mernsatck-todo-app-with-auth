@@ -24,9 +24,9 @@ export const createTodo = createAsyncThunk('todos/create',
 
 // Delete user todo
 export const deleteTodo = createAsyncThunk('todos/delete',
-    async (id, thunkAPI) => {
+    async (todId, thunkAPI) => {
         try {
-            return await todoService.deleteTodo(id) // goalService'den gelen deleteGoal() fonksiyonunu calistiriyorum
+            return await todoService.deleteTodo(todId) // goalService'den gelen deleteGoal() fonksiyonunu calistiriyorum
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
 
@@ -47,6 +47,32 @@ export const getTodos = createAsyncThunk('todos/getAll',
         }
     }
 )
+
+// Complete user todo
+export const completeTodo = createAsyncThunk('todos/complete',
+    async (todId, thunkAPI) => {
+        try {
+            return await todoService.completeTodo(todId) // goalService'den gelen deleteGoal() fonksiyonunu calistiriyorum
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+// Update user todo
+export const updateTodo = createAsyncThunk('todos/update',
+    async (todoData, thunkAPI) => {
+        try {
+            return await todoService.updateTodo(todoData) // goalService'den gelen deleteGoal() fonksiyonunu calistiriyorum
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 
 export const todoSlice = createSlice({
     name: 'todo',
@@ -76,23 +102,6 @@ export const todoSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
-            // .addCase(login.pending, (state) => {
-            //     state.isLoading = true
-            // })
-            // .addCase(login.fulfilled, (state, action) => {
-            //     state.isLoading = false
-            //     state.isSuccess = true
-            //     state.user = action.payload
-            // })
-            // .addCase(login.rejected, (state, action) => {
-            //     state.isLoading = false
-            //     state.isError = true
-            //     state.message = action.payload
-            //     state.user = null
-            // })
-            // .addCase(logout.fulfilled, (state) => {
-            //     state.user = null
-            // })
             .addCase(createTodo.pending, (state) => {
                 state.isLoading = true
             })
@@ -113,9 +122,44 @@ export const todoSlice = createSlice({
                 state.isLoading = false
                 state.isSuccess = true
                 state.todos = state.todos.filter((todo) => todo._id !== action.payload.id)
-                // action.payload.id'deki id'yi goalController.js icindeki deleteTodo'den res.status(200).json({ id: req.params.id }) seklinde gonderdim
+                // action.payload.id'deki id'yi todoController.js icindeki deleteTodo'dan res.status(200).json({ id: req.params.id }) seklinde gonderdim
             })
             .addCase(deleteTodo.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(completeTodo.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(completeTodo.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.todos = state.todos.map((todo) =>
+                    todo._id === action.payload.id ? { ...todo, complete: action.payload.complete } : todo
+                )
+                // action.payload.id'deki id'yi ve complete'i todoController.js icindeki completeTodo'den 
+                // res.status(200).json({ id: req.params.id, complete: completedTodo.complete }) seklinde gonderdim
+            })
+            .addCase(completeTodo.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(updateTodo.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(updateTodo.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.todos = state.todos.map((todo) =>
+                    todo._id === action.payload._id ? { ...todo, todo: action.payload.todo } : todo
+                )
+                // action.payload._id'deki id'yi ve todo'yu todoController.js icindeki updateTodo'dan 
+                // res.status(200).json(updatedTodo) seklinde gonderdim
+                // todoService icinde response.data yazdigim icin direk icindekiler {} seklinde gelmis oldu
+            })
+            .addCase(updateTodo.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

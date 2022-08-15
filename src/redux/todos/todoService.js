@@ -24,8 +24,25 @@ const deleteTodo = async (todoId) => {
     return response.data
 }
 
+// Delete user todo
+const completeTodo = async (todoId) => {
+
+    const response = await axios.get(API_URL + 'complete/' + todoId)
+
+    return response.data
+}
+
+// Update user todo
+const updateTodo = async (todoData) => {
+    // console.log(todoData)
+
+    const response = await axios.put(API_URL + todoData._id, todoData)
+
+    return response.data
+}
+
 const todoService = {
-    createTodo, deleteTodo, getTodos,
+    createTodo, deleteTodo, getTodos, completeTodo, updateTodo
 }
 
 export default todoService

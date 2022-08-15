@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
-import { MdOutlineMail, MdPersonOutline, MdLockOutline } from 'react-icons/md'
+// import { MdOutlineMail, MdPersonOutline, MdLockOutline } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../components/Spinner'
 // import Spinner from '../components/Spinner'
 import TodoItem from '../components/TodoItem'
 import { getTodos, reset } from '../redux/todos/todoSlice'
-import TodoForm from './TodoForm'
+import TodoForm from '../components/TodoForm'
 
 const Dashboard = () => {
     const navigate = useNavigate()

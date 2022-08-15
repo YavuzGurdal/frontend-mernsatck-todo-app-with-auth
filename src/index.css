@@ -266,7 +266,9 @@ a {
 .todo h2,
 h3 {
   color: #333;
-  margin-left: 5px;
+  /* margin-left: 5px; */
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 .button-updates {
   position: relative;
@@ -293,6 +295,13 @@ h3 {
 }
 .todo-input-icon {
   top: 34px !important;
+}
+.todo-complete {
+  text-decoration: line-through solid var(--main-color-dark) 2.5px;
+  /* text-decoration-line: line-through;
+  text-decoration-thickness: 0.2rem; */
+  /* text-decoration: line-through;*/
+  /* text-decoration-color: var(--main-color-dark); */
 }
 
 .loadingSpinnerContainer {
